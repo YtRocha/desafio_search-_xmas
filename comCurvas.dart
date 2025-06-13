@@ -1,6 +1,6 @@
 import 'dart:io';
 
-
+// Function to look around the current position in the grid
 int lookAround(List<List<String>> grid, int i, int j, int numberOfRows, int numberOfColumns, String char) {
   String nextChar;
 
@@ -44,6 +44,7 @@ int lookAround(List<List<String>> grid, int i, int j, int numberOfRows, int numb
   return total;
 }
 
+// Function to search for occurrences of XMAS
 int searchOccurences(List<List<String>> grid, int numberOfRows, int numberOfColumns) {
   int occurrences = 0;
 

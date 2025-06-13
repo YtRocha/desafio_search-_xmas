@@ -6,11 +6,13 @@ final directions = [
     [1, -1],  [1, 0],  [1, 1],
 ];
 
+// Function to check if the word can be found starting from a given position in a specific direction
 bool checkWord(List<List<String>> grid, int startRow, int startCol, int dirRow, int dirCol, int rows, int cols, String word) {
     for (int k = 0; k < word.length; k++) {
       int newRow = startRow + dirRow * k;
       int newCol = startCol + dirCol * k;
 
+	// Stay inside the grid boundaries
     if (newRow < 0 || newRow >= rows || newCol < 0 || newCol >= cols) {
       return false;
     }
@@ -23,6 +25,7 @@ bool checkWord(List<List<String>> grid, int startRow, int startCol, int dirRow, 
   return true;
 }
 
+// Function to search for occurrences of XMAS
 int searchOccurrences(List<List<String>> grid, int rows, int cols) {
     int count = 0;
     String target = "XMAS";
@@ -57,9 +60,13 @@ void main(List<String> args) async {
 
     final lines = await file.readAsLines();
 
+    // Convert lines to a grid of characters
     List<List<String>> grid = lines.map((line) => line.split('')).toList();
 
+    // grid 140x140
+    // the number of rows is 140
     final int numberOfRows = grid.length;
+    // the number of columns is 140 in the input, the same for all rows
     final int numberOfColumns = grid[0].length;
 
     final int totalOccurrences = searchOccurrences(grid, numberOfRows, numberOfColumns);
