@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart' show rootBundle;
+import 'utils/linearSearch.dart';
+import 'utils/curvedSearch.dart';
+import 'dart:io';
 
 void main() {
   runApp(const MyApp());
@@ -29,38 +33,49 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+  int _curvedOccurrences = 0;
+  int _linearOccurrences = 0;
 
-  void _incrementCounter() {
+  Future<void> _runCurvedSearch() async {
+    final data = await rootBundle.loadString('assets/input.txt');
+    final occurrences = runCurvedSearchFromString(data);
     setState(() {
-      _counter++;
+      _curvedOccurrences = occurrences;
+    });
+  }
+
+  Future<void> _runLinearSearch() async {
+    final data = await rootBundle.loadString('assets/example.txt');
+    final occurrences = runLinearSearchFromString(data);
+    setState(() {
+      _linearOccurrences = occurrences;
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-
-        title: Text(widget.title),
-      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text('You have pushed the button this many times:'),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
+          children: [
+            Text('Click the button to run the search'),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: _runCurvedSearch,
+              child: Text(
+                'Run Curved Search (Occurrences: $_curvedOccurrences)',
+              ),
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: _runLinearSearch,
+              child: Text(
+                'Run Linear Search (Occurrences: $_linearOccurrences)',
+              ),
             ),
           ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
       ),
     );
   }
